@@ -874,7 +874,7 @@ function handwork(_text, timer) {
     }
 }
 
-module.exports = {
+export default {
     swipe_up: swipe_up,
     handwork: handwork,
     be_careful: be_careful,
