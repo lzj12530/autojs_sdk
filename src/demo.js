@@ -271,4 +271,27 @@ function getDate() {
 }
 // startClock(startDuodianTest, '10:00:00', 1)
 
-startClock(startHemaTest, '15:00:00', 100)
+// startClock(startHemaTest, '15:00:00', 100)
+
+
+//  永辉 
+
+function startClock(handler,time_str,fix) {
+    fix = fix || -1100
+    let loadingTime = 1200
+    console.log('get loading time,' , loadingTime)
+    let delay = new Date(getDate() + ' ' + time_str).getTime() - new Date().getTime()
+    console.log(getDate() + ' ' + time_str)
+    console.log('clock delay', delay, 'ms')
+    setTimeout(handler, delay - fix - loadingTime)
+}
+function getDate() {
+    let date = new Date()
+    return date.toDateString()
+}
+
+let entry_point = new Point([789,609,860,645])
+
+// click_point(entry_point)
+
+startClock(() => click_point(entry_point), '10:00:00')

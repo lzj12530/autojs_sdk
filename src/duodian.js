@@ -83,8 +83,12 @@ function getDate() {
 function getStandardTime() {
     http.get('http://api.m.taobao.com/rest/api3.do?api=mtop.common.getTimestamp', {}, function(res, err) {
         let timestamp = res.body.json().data.t
-        console.log(new Date().getTime() - timestamp)
+        let fix = (new Date().getTime() - timestamp)
+        console.log(fix)
+        // startClock(main, '09:54:20',-fix)
     })
 }
-getStandardTime()
-// startClock(main, '10:00:00', -2000)
+// getStandardTime()    
+startClock(main, '10:00:00', 1200)
+
+// 永辉
