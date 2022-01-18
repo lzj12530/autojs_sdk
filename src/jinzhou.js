@@ -280,69 +280,13 @@ function login() {
 // });
 // console.log(events)
 
-function vibrate(duration, times, delay) {
-    if (delay == null) delay = 0
-    if (times == null) times = 1
-    for (i = 0; i < times; i++) {
-        device.vibrate(duration);
-        sleep(delay)
+while(true) {
+
+    click_text('toon')
+    sleep(3000)
+    if (textContains(502).findOne(1000)||textContains('未开放').findOne(1000)) {
+        back()
     }
-}
-
-let num = 0
-let limit = 1000
-function getSleepTime() {
-    let hour = new Date().getHours()
-    return hour < 13 ? 50000 : 0;
-}
-
-function waitLoop(time) {
-    click_text('我的', [30,-20])
-            sleep(time)
-            click_text('购物车', [30,-20])
-            sleep(time)
-}
-
-function failToConfirm() {
-    vibrate(3500, 100)
-    dialogs.build({
-        title: "你好",
-        content: "请问你是笨蛋吗?",
-        positive: "知道了"
-    }).on("positive", ()=>{
-        device.cancelVibration()
-    }).show()
-}
-
-let isFail = false
-while(num < limit) {
-    if (isFail) break;
-    sleep(getSleepTime())
-    num ++
-    // textContains('去结算').findOne().click()
-    if (textContains('收货赠送积分').exists()) {
-        textContains('提交订单').findOne().click()
-        sleep(3000)
-        if (textContains('失败').exists()) {
-            console.log('订单失败')
-            isFail = true
-            failToConfirm()
-            // 风控
-            sleep(50000)
-         }
-    } else {
-        let btn = textContains('去结算').findOne(1000)
-        if (!btn) {
-            console.log(btn)
-            waitLoop(2000)
-            continue;
-        }
-        btn.click()
-        sleep(1000)
-        if (textContains('太快').exists) {
-            sleep(2000)
-        }
-    }
-    sleep(random(6000,12000))
-    log('run ', num)
+    // sleep(random(30000,60000))
+    sleep(3000)
 }

@@ -64,7 +64,8 @@ function getStandardTime(callback) {
 
 
 getStandardTime(function(standardTime) {
-    startClock(main, '18:00:00', standardTime)
-})    
+    console.log(fix)
+}) 
 
+startClock(main, '18:00:00', 200)
 // 永辉

@@ -67,12 +67,13 @@ function getAverageTime(max) {
 // 定时器， 定时器时间 需要手动修正
 
 function startClock(handler,time_str,fix) {
+    console.log('start clock, get loading time')
     fix = fix || -1100
     let loadingTime = getAverageTime(6)
-    console.log('get loading time,' , loadingTime)
+    console.log('got a loading time,' , loadingTime)
     let delay = new Date(getDate() + ' ' + time_str).getTime() - new Date().getTime()
     console.log(getDate() + ' ' + time_str)
-    console.log('clock delay', delay, 'ms')
+    console.log('set clock delay', delay, 'ms')
     setTimeout(handler, delay - fix - loadingTime)
 }
 function getDate() {
@@ -80,15 +81,20 @@ function getDate() {
     return date.toDateString()
 }
 
-function getStandardTime() {
+function getStandardTime(obj) {
     http.get('http://api.m.taobao.com/rest/api3.do?api=mtop.common.getTimestamp', {}, function(res, err) {
         let timestamp = res.body.json().data.t
-        let fix = (new Date().getTime() - timestamp)
-        console.log(fix)
+        obj.fix = (new Date().getTime() - timestamp)
+        console.log(obj.fix)
         // startClock(main, '09:54:20',-fix)
     })
 }
-// getStandardTime()    
-startClock(main, '10:00:00', 1200)
-
-// 永辉
+let result = {
+    fix: 0
+}
+getStandardTime(result)    
+sleep(5000)
+console.log('got the delay ', result.fix)
+console.log('start in 10s')
+sleep(10000)
+startClock(main, '10:00:00', result.fix)
